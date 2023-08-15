@@ -3,7 +3,6 @@ package com.robsonconstrucoes;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
 class Funcionario {
     int codigo;
     String nome;
@@ -17,8 +16,8 @@ class Funcionario {
 }
 
 public class RobsonConstrucoes {
-    private ArrayList<Double> salarios = new ArrayList<>();
-    private ArrayList<Funcionario> funcionarios = new ArrayList<>();
+    private final ArrayList<Double> salarios = new ArrayList<>();
+    private final ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
     public void cadastrarCargo(double salario){
         salarios.add(salario);
@@ -48,6 +47,20 @@ public class RobsonConstrucoes {
         }
     }
 
+    public void mostrarTotalSalarioPorCargo(int codigoCargo) {
+        if (codigoCargo < 0 || codigoCargo >= salarios.size()) {
+            System.out.println("Código de cargo inválido.");
+            return;
+        }
+        double totalSalario = 0;
+        for (Funcionario func : funcionarios) {
+            if (func.codigoCargo == codigoCargo) {
+                totalSalario += salarios.get(func.codigoCargo);
+            }
+        }
+        System.out.printf("Total de salário para o cargo %d: R$ %.2f%n", codigoCargo, totalSalario);
+    }
+
     public static void main(String[] args) {
         RobsonConstrucoes empresa = new RobsonConstrucoes();
         Scanner scanner = new Scanner(System.in);
@@ -63,12 +76,12 @@ public class RobsonConstrucoes {
             int option = scanner.nextInt();
 
             switch (option) {
-                case 1:
+                case 1 -> {
                     System.out.print("Digite o salário do novo cargo: ");
                     double salario = scanner.nextDouble();
                     empresa.cadastrarCargo(salario);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.print("Digite o código do funcionário: ");
                     int codigo = scanner.nextInt();
                     System.out.print("Digite o nome do funcionário: ");
@@ -76,18 +89,19 @@ public class RobsonConstrucoes {
                     System.out.print("Digite o código do cargo: ");
                     int codigoCargo = scanner.nextInt();
                     empresa.cadastrarFuncionario(codigo, nome, codigoCargo);
-                    break;
-                case 3:
-                    empresa.mostrarRelatorio();
-                    break;
-                case 4:
-                    break;
-                case 5:
+                }
+                case 3 -> empresa.mostrarRelatorio();
+                case 4 -> {
+                    System.out.print("Digite o código do cargo: ");
+                    int codigoCargoTotal = scanner.nextInt();
+                    empresa.mostrarTotalSalarioPorCargo(codigoCargoTotal);
+                }
+                case 5 -> {
                     System.out.println("Saindo...");
                     scanner.close();
                     System.exit(0);
-                default:
-                    System.out.println("Opção inválida. Escolha uma opção válida.");
+                }
+                default -> System.out.println("Opção inválida. Escolha uma opção válida.");
             }
         }
     }
