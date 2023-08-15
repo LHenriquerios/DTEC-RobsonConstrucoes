@@ -4,12 +4,40 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 
+class Funcionario {
+    int codigo;
+    String nome;
+    int codigoCargo;
+
+    public Funcionario (int codigo, String nome, int codigoCargo){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.codigoCargo = codigoCargo;
+    }
+}
+
 public class RobsonConstrucoes {
     private ArrayList<Double> salarios = new ArrayList<>();
+    private ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
     public void cadastrarCargo(double salario){
         salarios.add(salario);
         System.out.println("Cargo cadastrado com sucesso.");
+    }
+
+    public void cadastrarFuncionario(int codigo, String nome, int codigoCargo) {
+        for (Funcionario func : funcionarios) {
+            if (func.codigo == codigo) {
+                System.out.println("Código de funcionário já existe. Escolha outro.");
+                return;
+            }
+        }
+        if (codigoCargo < 0 || codigoCargo >= salarios.size()) {
+            System.out.println("Código de cargo inválido.");
+            return;
+        }
+        funcionarios.add(new Funcionario(codigo, nome, codigoCargo));
+        System.out.println("Funcionário cadastrado com sucesso.");
     }
 
     public static void main(String[] args) {
@@ -38,6 +66,8 @@ public class RobsonConstrucoes {
                     System.out.print("Digite o nome do funcionário: ");
                     String nome = scanner.next();
                     System.out.print("Digite o código do cargo: ");
+                    int codigoCargo = scanner.nextInt();
+                    empresa.cadastrarFuncionario(codigo, nome, codigoCargo);
                     break;
                 case 3:
                     break;
