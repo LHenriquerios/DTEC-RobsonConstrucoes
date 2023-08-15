@@ -40,6 +40,14 @@ public class RobsonConstrucoes {
         System.out.println("Funcionário cadastrado com sucesso.");
     }
 
+    public void mostrarRelatorio() {
+        System.out.println("Relatório de Funcionários:");
+        for (Funcionario func : funcionarios) {
+            double salario = salarios.get(func.codigoCargo);
+            System.out.printf("Código: %d | Nome: %s | Salário: R$ %.2f%n", func.codigo, func.nome, salario);
+        }
+    }
+
     public static void main(String[] args) {
         RobsonConstrucoes empresa = new RobsonConstrucoes();
         Scanner scanner = new Scanner(System.in);
@@ -70,6 +78,7 @@ public class RobsonConstrucoes {
                     empresa.cadastrarFuncionario(codigo, nome, codigoCargo);
                     break;
                 case 3:
+                    empresa.mostrarRelatorio();
                     break;
                 case 4:
                     break;
